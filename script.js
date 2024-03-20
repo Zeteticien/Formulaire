@@ -1,16 +1,37 @@
 document.getElementById('contactForm').addEventListener('submit', function(event){
-  event.preventDefault(); // Pour éviter l'envoi réel du formulaire
+  event.preventDefault(); // Empêche l'envoi traditionnel du formulaire
 
-  // Ici, vous pouvez ajouter une validation ou un traitement supplémentaire
   var name = document.getElementById('name').value;
   var email = document.getElementById('email').value;
   var message = document.getElementById('message').value;
 
-  if(name && email && message) {
-    // Envoyez les données à votre serveur ou affichez un message de réussite
-    console.log('Nom:', name, 'Email:', email, 'Message:', message);
+  // Prépare les données du formulaire pour l'envoi
+  var formData = {
+    name: name,
+    email: email,
+    message: message
+  };
+
+  // Utilise fetch API pour envoyer les données via POST
+  fetch('https://hook.eu2.make.com/1tkr4ysfbr6k5csm3okv1mywwwyuhvx3', {
+    method: 'POST', // Méthode HTTP pour l'envoi de données
+    headers: {
+      'Content-Type': 'application/json', // Indique que le corps de la requête est du JSON
+    },
+    body: JSON.stringify(formData), // Convertit les données du formulaire en chaîne JSON
+  })
+  .then(response => {
+    if(response.ok) {
+      return response.json();
+    }
+    throw new Error('Network response was not ok.');
+  })
+  .then(data => {
+    console.log('Success:', data);
     alert('Merci pour votre message, ' + name + '!');
-  } else {
-    alert('Veuillez remplir tous les champs.');
-  }
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert('Une erreur s\'est produite lors de l\'envoi de votre message.');
+  });
 });
