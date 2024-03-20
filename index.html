@@ -8,6 +8,14 @@
 
 <div class="container">
   <form id="contactForm">
+    <label for="queryType">Type de requête :</label>
+    <select id="queryType" name="queryType" required>
+      <option value="technique">Technique</option>
+      <option value="facturation">Facturation</option>
+      <option value="devis">Devis</option>
+      <option value="autres">Autres</option>
+    </select>
+
     <label for="name">Nom :</label>
     <input type="text" id="name" name="name" required>
 
